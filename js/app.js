@@ -1,14 +1,21 @@
 let nomesAmigos = []
 
 function adicionar() {
-    let nomeEscolhido = document.getElementById("nome-amigo").value;
+    let nomeInput = document.getElementById("nome-amigo").value.trim();
 
-    if (nomeEscolhido.trim() === "") {
-        alert("Digite um nome válido");
+    if (nomeInput === "") {
+        alert("Informe o nome do amigo!");
         return;
     }
 
-    nomesAmigos.push(nomeEscolhido);
+    let nomeArray = nomeInput.toUpperCase();
+
+    if (nomesAmigos.includes(nomeArray)) {
+        alert("Nome já adicionado");
+        return;
+    }
+
+    nomesAmigos.push(nomeArray);
 
     document.getElementById("nome-amigo").value = "";
 
@@ -16,6 +23,10 @@ function adicionar() {
 }
 
 function sortear () {
+    if (nomesAmigos.length < 4){
+        alert ("adicione pelo menos 4 amigos")      
+        return;
+    }
     let resultadoSorteio = document.getElementById("lista-sorteio")
     resultadoSorteio.innerHTML = "";
 
@@ -60,7 +71,11 @@ function atualizarLista() {
 
     for (let i = 0; i < nomesAmigos.length; i++) {
 
-        container.innerHTML += `<span onclick="remover(${i})">${nomesAmigos[i]}</span>`;
+        let nomeFormatado =
+            nomesAmigos[i].charAt(0) +
+            nomesAmigos[i].slice(1).toLowerCase();
+
+        container.innerHTML += `<span onclick="remover(${i})">${nomeFormatado}</span>`;
 
         if (i < nomesAmigos.length - 1) {
             container.innerHTML += ", ";
